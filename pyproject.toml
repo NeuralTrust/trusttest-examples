@@ -1,0 +1,38 @@
+[project]
+name = "trusttest-examples"
+version = "0.1.0"
+description = " Example code and tutorials demonstrating how to use TrustTest for LLM functional evaluation and red teaming "
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+   "python-dotenv>=1.2.1",
+   "trusttest[google,openai,ollama,anthropic,azure]==1.19.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.18.2",
+    "pre-commit>=4.4.0",
+    "ruff>=0.14.6",
+]
+azure-kb = [
+    "trusttest[rag-azure]>=1.19.0",
+]
+upstash-kb = [
+    "trusttest[rag-upstash]>=1.19.0",
+]
+neo4j-kb = [
+    "trusttest[rag-neo4j]>=1.19.0",
+]
+postgres-kb = [
+    "trusttest[rag-postgres]>=1.19.0",
+]
+
+[[tool.uv.index]]
+name = "internal"
+url = "https://oauth2accesstoken@europe-west1-python.pkg.dev/neuraltrust-app-dev/nt-python/simple"
+
+[tool.mypy]
+[[tool.mypy.overrides]]
+module = "trusttest.*"
+ignore_missing_imports = true

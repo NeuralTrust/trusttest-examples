@@ -1,0 +1,57 @@
+[
+    [
+        {
+            "question": "What is Python?",
+            "context": {
+                "expected_response": "Python is a high-level, interpreted programming language.",
+                "question": "What is Python?"
+            }
+        },
+        {
+            "question": "How do you define a function in Python?",
+            "context": {
+                "expected_response": "In Python, you define a function using the 'def' keyword followed by the function name and parameters.",
+                "question": "How do you define a function in Python?"
+            }
+        },
+        {
+            "question": "What is a list in Python?",
+            "context": {
+                "expected_response": "A list is a built-in data structure in Python that can hold multiple items in an ordered sequence.",
+                "question": "What is a list in Python?"
+            }
+        },
+        {
+            "question": "Explain Python decorators.",
+            "context": {
+                "expected_response": "Decorators are functions that modify the behavior of other functions or classes in Python.",
+                "question": "Explain Python decorators."
+            }
+        },
+        {
+            "question": "What is PEP 8?",
+            "context": {
+                "expected_response": "PEP 8 is Python's style guide for writing clean and readable code.",
+                "question": "What is PEP 8?"
+            }
+        }
+    ],
+    [
+        {
+            "question": "What is Rust?",
+            "context": {
+                "expected_response": "Rust is a systems programming language that is fast, safe, and concurrent.",
+                "question": "What is Rust?"
+            }
+        }
+    ],
+    [
+        {
+            "question": "What is the capital of France?",
+            "context": {
+                "expected_response": "The capital of France is Paris.",
+                "question": "What is the capital of France?"
+            }
+        }
+    ]
+]

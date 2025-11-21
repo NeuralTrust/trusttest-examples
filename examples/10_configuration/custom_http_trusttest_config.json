@@ -1,0 +1,66 @@
+{
+    "evaluator": {
+        "provider": "http",
+        "model": "deepseek-r1:32b",
+        "temperature": 0.2,
+        "extra_args": {
+            "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+            "headers": {
+                "Content-Type": "application/json",
+                "X-goog-api-key": "GEMINI_API_KEY"
+            },
+            "payload_config": {
+                "contents": [
+                    {"role": "model", "parts": [{"text": "{{ system_prompt }}"}]},
+                    {"role": "user", "parts": [{"text": "{{ instructions }}"}]}
+                ],
+                "generationConfig": {"responseMimeType": "application/json"}
+            },
+            "concatenate_field": "candidates.0.content.parts.0.text"
+        }
+    },
+    "question_generator": {
+        "provider": "http",
+        "model": "deepseek-r1:32b",
+        "temperature": 0.2,
+        "extra_args": {
+            "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+            "headers": {
+                "Content-Type": "application/json",
+                "X-goog-api-key": "GEMINI_API_KEY"
+            },
+            "payload_config": {
+                "contents": [
+                    {"role": "model", "parts": [{"text": "{{ system_prompt }}"}]},
+                    {"role": "user", "parts": [{"text": "{{ instructions }}"}]}
+                ],
+                "generationConfig": {"responseMimeType": "application/json"}
+            },
+            "concatenate_field": "candidates.0.content.parts.0.text"
+        }
+    },
+    "topic_summarizer": {
+        "provider": "http",
+        "model": "deepseek-r1:32b",
+        "temperature": 0.2,
+        "extra_args": {
+            "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+            "headers": {
+                "Content-Type": "application/json",
+                "X-goog-api-key": "GEMINI_API_KEY"
+            },
+            "payload_config": {
+                "contents": [
+                    {"role": "model", "parts": [{"text": "{{ system_prompt }}"}]},
+                    {"role": "user", "parts": [{"text": "{{ instructions }}"}]}
+                ],
+                "generationConfig": {"responseMimeType": "application/json"}
+            },
+            "concatenate_field": "candidates.0.content.parts.0.text"
+        }
+    },
+    "embeddings": {
+        "provider": "openai",
+        "model": "text-embedding-3-small"
+    }
+}
