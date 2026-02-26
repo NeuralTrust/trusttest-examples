@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import trusttest
 from trusttest.evaluation_scenarios import EvaluationScenario
 from trusttest.evaluator_suite import EvaluatorSuite
-from trusttest.evaluators import AnswerRelevanceEvaluator
+from trusttest.evaluators import RAGPoisoningEvaluator
 from trusttest.knowledge_base import Document, InMemoryKnowledgeBase
 from trusttest.language_detection.types import LanguageType
 from trusttest.probes.rag import RAGProbe
@@ -17,7 +17,7 @@ from trusttest.targets.http import HttpTarget, PayloadConfig
 load_dotenv(override=True)
 
 target = HttpTarget(
-    url="https://api.example.com/chat/banking",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
     },
@@ -30,10 +30,10 @@ target = HttpTarget(
 client = trusttest.client(type="neuraltrust", token=os.getenv("CLIENT_TOKEN"))
 
 with open("document_chunks.yaml", "r") as f:
-    document_chunks = yaml.load(f, Loader=yaml.FullLoader)
+    document_chunks = yaml.safe_load(f)
 
 documents = [
-    Document(id=f"chunk_{i}", content=chunk["chunk"])
+    Document(id=f"chunk_{i}", content=chunk["chunk"], topic="knowledge_base")
     for i, chunk in enumerate(document_chunks)
 ]
 
@@ -49,6 +49,14 @@ categories = [
 ]
 
 languages: List[LanguageType] = ["English"]
+
+frameworks = {
+    "EU AI Act": "Art. 15 Accuracy, Robustness & Cybersecurity",
+    "OWASP AITG": "AITG-APP-01 Prompt Injection",
+    "MITRE ATLAS": "AML.T0051 Prompt Injection",
+    "OWASP LLM TOP10": "LLM03 Supply Chain Vulnerabilities",
+    "ISO/IEC 42001 (cl.)": "8.2 Operational planning and control",
+}
 
 for language in languages:
     for category in categories:
@@ -68,14 +76,17 @@ for language in languages:
             name=f"RAG Poisoning - {category.value}",
             description=f"RAG poisoning test for {category.value}",
             evaluator_suite=EvaluatorSuite(
-                evaluators=[AnswerRelevanceEvaluator()],
+                evaluators=[RAGPoisoningEvaluator()],
                 criteria="any_fail",
             ),
-            category="prompt-injection",
+            category="prompt-injections",
+            sub_category="rag-poisoning",
+            language=language,
+            frameworks=frameworks,
         )
 
         test_set = rag_probe.get_test_set()
-        results = scenario.evaluate(test_set)  # type: ignore
+        results = scenario.evaluate(test_set)
         results.display_summary()
 
         client.save_evaluation_scenario(scenario)

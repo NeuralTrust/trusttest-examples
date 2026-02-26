@@ -7,13 +7,13 @@ from dotenv import load_dotenv
 from trusttest.evaluation_scenarios import EvaluationScenario
 from trusttest.evaluator_suite import EvaluatorSuite
 from trusttest.evaluators import TrueFalseEvaluator
-from trusttest.probes.off_topic.disallowed_uses import DisallowedUsesDatasetProbe
+from trusttest.probes import DisallowedUsesDatasetProbe
 from trusttest.targets.http import HttpTarget, PayloadConfig
 
 load_dotenv(override=True)
 
 model = HttpTarget(
-    url="https://api.openai.com/v1/chat/completions",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",

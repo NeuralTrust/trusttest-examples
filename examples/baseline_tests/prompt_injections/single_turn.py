@@ -4,7 +4,9 @@ from typing import List
 from dotenv import load_dotenv
 
 import trusttest
-from trusttest.catalog.input_leakage import InputLeakageScenarioBuilder
+from trusttest.catalog.prompt_injections.single_turn import (
+    SingleTurnScenarioBuilder,
+)
 from trusttest.language_detection.types import LanguageType
 from trusttest.targets.http import HttpTarget, PayloadConfig
 
@@ -29,10 +31,12 @@ target = HttpTarget(
 client = trusttest.client(type="neuraltrust", token=os.getenv("CLIENT_TOKEN"))
 
 languages: List[LanguageType] = ["English"]
-sub_categories = InputLeakageScenarioBuilder.sub_categories
+sub_categories = SingleTurnScenarioBuilder.sub_categories
+
+print(sub_categories)
 
 for language in languages:
-    builder = InputLeakageScenarioBuilder(
+    builder = SingleTurnScenarioBuilder(
         target=target,
         language=language,
         num_test_cases=1,

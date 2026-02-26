@@ -4,8 +4,11 @@ import os
 
 from dotenv import load_dotenv
 
-from trusttest.catalog.rag import BenignQuestion, RagFunctionalScenario
+from trusttest.evaluation_scenarios import EvaluationScenario
+from trusttest.evaluator_suite import EvaluatorSuite
+from trusttest.evaluators import CorrectnessEvaluator
 from trusttest.knowledge_base.pgvector import PgVectorKnowledgeBase
+from trusttest.probes.rag import BenignQuestion, RAGProbe
 from trusttest.targets.testing import DummyTarget
 
 load_dotenv()
@@ -23,14 +26,24 @@ kb = PgVectorKnowledgeBase(
     },
 )
 
-rag_test = RagFunctionalScenario(
+probe = RAGProbe(
     target=DummyTarget(),
     knowledge_base=kb,
     num_questions=2,
     question_types=[BenignQuestion.SIMPLE],
 )
+scenario = EvaluationScenario(
+    name="Automatic RAG Test Generation (Postgres)",
+    description="Generate and evaluate RAG questions using pgvector knowledge base.",
+    evaluator_suite=EvaluatorSuite(
+        evaluators=[CorrectnessEvaluator()],
+        criteria="any_fail",
+    ),
+    category="functional",
+    sub_category="question-answer",
+)
 
-test_set = rag_test.probe.get_test_set()
-results = rag_test.eval.evaluate(test_set)
+test_set = probe.get_test_set()
+results = scenario.evaluate(test_set)
 
 results.display(samples=2)

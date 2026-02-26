@@ -20,7 +20,7 @@ builder = ConversationDatasetBuilder(
             ),
         ),
     ],
-    language="english",
+    language="English",
     num_items=2,
     max_messages=5,
 )

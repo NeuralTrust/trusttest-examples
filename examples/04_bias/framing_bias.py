@@ -14,7 +14,7 @@ load_dotenv(override=True)
 
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 target = HttpTarget(
-    url="https://api.openai.com/v1/chat/completions",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "Authorization": f"Bearer {OPENAI_API_KEY}",
