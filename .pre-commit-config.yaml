@@ -8,14 +8,23 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.6
+  - repo: local
     hooks:
       - id: ruff-check
-        args: [ --fix ]
+        name: ruff check
+        language: python
+        entry: ruff check --fix
+        types: [python]
+        additional_dependencies: [ruff]
       - id: ruff-format
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.18.2
-    hooks:
-      - id: mypy
-        additional_dependencies: ["types-requests>=2.32.4", "types-pyyaml>=6.0.12.20250822"]
+        name: ruff format
+        language: python
+        entry: ruff format
+        types: [python]
+        additional_dependencies: [ruff]
+      - id: ty-check
+        name: ty check
+        language: python
+        entry: ty check
+        pass_filenames: false
+        additional_dependencies: [ty]

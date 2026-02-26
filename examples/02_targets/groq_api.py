@@ -13,7 +13,7 @@ client = get_llm_client(
     model="openai/gpt-oss-20b",
     provider="openai",
     api_key=os.getenv("GROQ_API_KEY"),
-    base_url="https://api.groq.com/openai/v1",
+    base_url="https://example.com/api/v1",
 )
 
 response = asyncio.run(

@@ -23,7 +23,7 @@ builder = SinglePromptDatasetBuilder(
             ),
         ),
     ],
-    language="english",
+    language="English",
     num_items=5,
 )
 

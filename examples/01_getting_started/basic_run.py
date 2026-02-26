@@ -17,7 +17,7 @@ load_dotenv(override=True)
 
 
 target = HttpTarget(
-    url="https://my-llm/chat",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
     },

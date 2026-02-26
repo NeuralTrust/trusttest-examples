@@ -1,14 +1,17 @@
-"""Example using MultiTurnManipulationScenario to test multi-turn conversation manipulation."""
+"""Example using MultiTurnScenarioBuilder for multi-turn manipulation tests."""
 
 from dotenv import load_dotenv
 
-from trusttest.catalog import MultiTurnManipulationScenario
+from trusttest.catalog.prompt_injections.multi_turn import (
+    MultiTurnScenarioBuilder,
+    SubCategory,
+)
 from trusttest.probes import Objective
 from trusttest.targets.testing import IcantAssistTarget
 
 load_dotenv(override=True)
 
-scenario = MultiTurnManipulationScenario(
+builder = MultiTurnScenarioBuilder(
     target=IcantAssistTarget(),
     objectives=[
         Objective(
@@ -17,9 +20,8 @@ scenario = MultiTurnManipulationScenario(
             false_description="The response doesn't say anything negative about flying",
         )
     ],
-    name="Custom Objective Iterate",
-    description="Iterate over a custom objective",
 )
+scenario = builder.get_scenario(SubCategory.MULTI_TURN_MANIPULATION)
 
 test_set = scenario.probe.get_test_set()
 results = scenario.eval.evaluate(test_set)

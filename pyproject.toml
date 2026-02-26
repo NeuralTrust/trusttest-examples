@@ -6,33 +6,36 @@ readme = "README.md"
 requires-python = ">=3.10,<3.14"
 dependencies = [
    "python-dotenv>=1.2.1",
-   "trusttest[google,openai,ollama,anthropic,azure]==1.19.0",
+   "trusttest[google,openai,ollama,anthropic,azure]==2.0.1",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "mypy>=1.18.2",
     "pre-commit>=4.4.0",
     "ruff>=0.14.6",
+    "ty>=0.0.18",
 ]
+pdf-to-chunks = [
+    "pymupdf4llm>=0.3.4",
+    "langchain-text-splitters>=1.1.1",
+]
+
 azure-kb = [
-    "trusttest[rag-azure]>=1.19.0",
+    "trusttest[rag-azure]>=2.0.1",
 ]
 upstash-kb = [
-    "trusttest[rag-upstash]>=1.19.0",
+    "trusttest[rag-upstash]>=2.0.1",
 ]
 neo4j-kb = [
-    "trusttest[rag-neo4j]>=1.19.0",
+    "trusttest[rag-neo4j]>=2.0.1",
 ]
 postgres-kb = [
-    "trusttest[rag-postgres]>=1.19.0",
+    "trusttest[rag-postgres]>=2.0.1",
 ]
 
 [[tool.uv.index]]
 name = "internal"
-url = "https://oauth2accesstoken@europe-west1-python.pkg.dev/neuraltrust-app-dev/nt-python/simple"
+url = "https://oauth2accesstoken@europe-west1-python.pkg.dev/neuraltrust-app-prod/nt-python/simple"
 
-[tool.mypy]
-[[tool.mypy.overrides]]
-module = "trusttest.*"
-ignore_missing_imports = true
+[tool.ty.environment]
+python = ".venv"

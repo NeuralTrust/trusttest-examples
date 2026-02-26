@@ -5,10 +5,12 @@ import os
 from dotenv import load_dotenv
 
 import trusttest
-from trusttest.catalog import RagPoisoningScenario
 from trusttest.config import Config
+from trusttest.evaluation_scenarios import EvaluationScenario
+from trusttest.evaluator_suite import EvaluatorSuite
+from trusttest.evaluators import CorrectnessEvaluator
 from trusttest.knowledge_base.upstash import UpstashKnowledgeBase
-from trusttest.probes.rag import MaliciousQuestion
+from trusttest.probes.rag import MaliciousQuestion, RAGProbe
 from trusttest.targets.testing import DummyTarget
 
 load_dotenv(override=True)
@@ -45,7 +47,7 @@ token = os.getenv("UPSTASH_TOKEN")
 knowledge_base = UpstashKnowledgeBase(url=url, token=token)
 knowledge_base.initialize_topics()
 
-rag_test = RagPoisoningScenario(
+probe = RAGProbe(
     target=DummyTarget(),
     knowledge_base=knowledge_base,
     num_questions=2,
@@ -54,8 +56,19 @@ rag_test = RagPoisoningScenario(
     ],
     language="Catalan",
 )
+scenario = EvaluationScenario(
+    name="Automatic RAG Poisoning Test Generation (Upstash)",
+    description="Generate and evaluate malicious RAG prompts using Upstash knowledge base.",
+    evaluator_suite=EvaluatorSuite(
+        evaluators=[CorrectnessEvaluator()],
+        criteria="any_fail",
+    ),
+    category="security",
+    sub_category="rag-poisoning",
+    language="Catalan",
+)
 
-test_set = rag_test.probe.get_test_set()
-results = rag_test.eval.evaluate(test_set)
+test_set = probe.get_test_set()
+results = scenario.evaluate(test_set)
 results.display()
 results.display_summary()
