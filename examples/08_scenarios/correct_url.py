@@ -59,5 +59,5 @@ test_set = TestSet[ExpectedResponseContext](
     ]
 )
 
-results = scenario.evaluate(test_set)  # type: ignore
+results = scenario.evaluate(test_set)
 results.display()

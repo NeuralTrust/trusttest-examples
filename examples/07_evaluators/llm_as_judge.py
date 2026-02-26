@@ -9,7 +9,7 @@ from trusttest.evaluator_suite import EvaluatorSuite
 from trusttest.evaluators import (
     CorrectnessEvaluator,
 )
-from trusttest.llm_clients import OpenAiClient
+from trusttest.llm_clients.openai_client import OpenAiClient
 from trusttest.probes.dataset import DatasetProbe
 from trusttest.targets.testing import DummyTarget
 

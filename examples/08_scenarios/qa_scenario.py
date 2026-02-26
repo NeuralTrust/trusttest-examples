@@ -1,10 +1,13 @@
-"""Example using DatasetScenario with SinglePromptDatasetBuilder to build and evaluate a dataset."""
+"""Example using DatasetProbe with SinglePromptDatasetBuilder to evaluate a dataset."""
 
 from dotenv import load_dotenv
 
-from trusttest.catalog import DatasetScenario
 from trusttest.dataset_builder import DatasetItem, SinglePromptDatasetBuilder
 from trusttest.evaluation_contexts import ExpectedResponseContext
+from trusttest.evaluation_scenarios import EvaluationScenario
+from trusttest.evaluator_suite import EvaluatorSuite
+from trusttest.evaluators import CorrectnessEvaluator
+from trusttest.probes.dataset import DatasetProbe
 from trusttest.targets.http import HttpTarget, PayloadConfig
 
 load_dotenv(override=True)
@@ -24,14 +27,14 @@ dataset_builder = SinglePromptDatasetBuilder(
         ),
     ],
     context_type=ExpectedResponseContext,
-    language="english",
+    language="English",
     num_items=2,
 )
 
 dataset = dataset_builder.build()
 
 model = HttpTarget(
-    url="https://chat.neuraltrust.ai/api/chat",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "X-NeuralTrust-Id": "123",
@@ -48,12 +51,20 @@ model = HttpTarget(
     concatenate_field=".",
 )
 
-scenario = DatasetScenario(
+probe = DatasetProbe(
     target=model,
     dataset=dataset,
 )
+scenario = EvaluationScenario(
+    name="QA Scenario",
+    description="Evaluate generated QA dataset with correctness checks.",
+    evaluator_suite=EvaluatorSuite(
+        evaluators=[CorrectnessEvaluator()],
+        criteria="any_fail",
+    ),
+)
 
 
-test_set = scenario.probe.get_test_set()
-results = scenario.eval.evaluate(test_set)
+test_set = probe.get_test_set()
+results = scenario.evaluate(test_set)
 results.display()

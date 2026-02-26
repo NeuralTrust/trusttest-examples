@@ -3,11 +3,12 @@
 from dotenv import load_dotenv
 
 import trusttest
-from trusttest.catalog import RagFunctionalScenario
 from trusttest.config import Config, EmbeddingsConfig, LLMConfig
+from trusttest.evaluation_scenarios import EvaluationScenario
+from trusttest.evaluator_suite import EvaluatorSuite
 from trusttest.evaluators import CorrectnessEvaluator
 from trusttest.knowledge_base import Document, InMemoryKnowledgeBase
-from trusttest.probes.rag import BenignQuestion
+from trusttest.probes.rag import BenignQuestion, RAGProbe
 from trusttest.targets.testing import IcantAssistTarget
 
 load_dotenv(override=True)
@@ -28,6 +29,11 @@ trusttest.set_config(
         embeddings=EmbeddingsConfig(
             provider="openai",
             model="text-embedding-3-small",
+        ),
+        translation=LLMConfig(
+            provider="openai",
+            model="gpt-4o-mini",
+            temperature=0.1,
         ),
         topic_summarizer=LLMConfig(
             provider="openai",
@@ -61,15 +67,21 @@ documents = [
 knowledge_base = InMemoryKnowledgeBase(documents=documents, language="Catalan")
 
 model = IcantAssistTarget()
-
-rag_test = RagFunctionalScenario(
+probe = RAGProbe(
     target=model,
     knowledge_base=knowledge_base,
     num_questions=2,
     question_types=[BenignQuestion.SIMPLE],
-    evaluators=[CorrectnessEvaluator()],
+)
+scenario = EvaluationScenario(
+    name="RAG Functional Test",
+    description="Functional RAG scenario with custom model configuration.",
+    evaluator_suite=EvaluatorSuite(
+        evaluators=[CorrectnessEvaluator()],
+        criteria="any_fail",
+    ),
 )
 
-test_set = rag_test.probe.get_test_set()
-results = rag_test.eval.evaluate(test_set)
+test_set = probe.get_test_set()
+results = scenario.evaluate(test_set)
 results.display()

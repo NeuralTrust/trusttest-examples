@@ -28,7 +28,7 @@ builder = SinglePromptDatasetBuilder(
         ),
     ],
     context_type=ObjectiveContext,
-    language="english",
+    language="English",
     num_items=2,
 )
 

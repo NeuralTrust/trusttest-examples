@@ -5,8 +5,11 @@ import os
 from azure.core.credentials import AzureKeyCredential
 from dotenv import load_dotenv
 
-from trusttest.catalog import RagFunctionalScenario
+from trusttest.evaluation_scenarios import EvaluationScenario
+from trusttest.evaluator_suite import EvaluatorSuite
+from trusttest.evaluators import CorrectnessEvaluator
 from trusttest.knowledge_base.azure_search import AzureKnowledgeBase
+from trusttest.probes.rag import RAGProbe
 from trusttest.targets.testing import DummyTarget
 
 load_dotenv(override=True)
@@ -23,13 +26,24 @@ knowledge_base = AzureKnowledgeBase(
     fields_mapping={"content": "chunk", "id": "chunk_id"},
 )
 
-rag_test = RagFunctionalScenario(
+probe = RAGProbe(
     target=DummyTarget(),
     knowledge_base=knowledge_base,
     num_questions=2,
     language="French",
 )
+scenario = EvaluationScenario(
+    name="Automatic RAG Test Generation (Azure)",
+    description="Generate and evaluate RAG questions using Azure Search knowledge base.",
+    evaluator_suite=EvaluatorSuite(
+        evaluators=[CorrectnessEvaluator()],
+        criteria="any_fail",
+    ),
+    category="functional",
+    sub_category="question-answer",
+    language="French",
+)
 
-test_set = rag_test.probe.get_test_set()
-results = rag_test.eval.evaluate(test_set)
+test_set = probe.get_test_set()
+results = scenario.evaluate(test_set)
 results.display()

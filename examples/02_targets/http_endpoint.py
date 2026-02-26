@@ -23,7 +23,7 @@ client = trusttest.client(type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN
 
 
 model = HttpTarget(
-    url="https://chat.neuraltrust.ai/api/chat",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "X-NeuralTrust-Id": "123",
