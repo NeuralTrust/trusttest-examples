@@ -8,14 +8,20 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.6
-    hooks:
-      - id: ruff-check
-        args: [ --fix ]
-      - id: ruff-format
   - repo: local
     hooks:
+      - id: ruff-check
+        name: ruff check
+        language: python
+        entry: ruff check --fix
+        types: [python]
+        additional_dependencies: [ruff]
+      - id: ruff-format
+        name: ruff format
+        language: python
+        entry: ruff format
+        types: [python]
+        additional_dependencies: [ruff]
       - id: ty-check
         name: ty check
         language: python
