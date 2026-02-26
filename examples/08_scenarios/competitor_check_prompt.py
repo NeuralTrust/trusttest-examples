@@ -14,7 +14,7 @@ load_dotenv(override=True)
 
 
 model = HttpTarget(
-    url="https://chat.neuraltrust.ai/api/chat",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "X-NeuralTrust-Id": "123",

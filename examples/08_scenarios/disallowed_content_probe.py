@@ -1,4 +1,4 @@
-"""Example testing disallowed content detection using DisallowedContentDatasetProbe."""
+"""Example testing disallowed content detection using a category-specific probe."""
 
 import os
 
@@ -7,13 +7,13 @@ from dotenv import load_dotenv
 from trusttest.evaluation_scenarios import EvaluationScenario
 from trusttest.evaluator_suite import EvaluatorSuite
 from trusttest.evaluators import TrueFalseEvaluator
-from trusttest.probes.off_topic.disallowed_content import DisallowedContentDatasetProbe
+from trusttest.probes import TechnologyDisallowedContentDatasetProbe
 from trusttest.targets.http import HttpTarget, PayloadConfig
 
 load_dotenv(override=True)
 
 model = HttpTarget(
-    url="https://api.openai.com/v1/chat/completions",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",
@@ -34,7 +34,7 @@ model = HttpTarget(
     concatenate_field="choices.0.message.content",
 )
 
-probe = DisallowedContentDatasetProbe(
+probe = TechnologyDisallowedContentDatasetProbe(
     target=model,
     max_objectives_per_category=1,
 )

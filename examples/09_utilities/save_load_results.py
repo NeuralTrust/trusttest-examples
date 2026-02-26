@@ -21,7 +21,7 @@ from trusttest.targets.testing import DummyTarget
 load_dotenv(override=True)
 
 
-os.environ["NEURALTRUST_BASE_URL"] = "http://0.0.0.0:8500/v1/evaluation"
+os.environ["NEURALTRUST_BASE_URL"] = "https://example.com/v1/evaluation"
 
 
 client = trusttest.client(type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN"))
@@ -44,7 +44,6 @@ scenario = EvaluationScenario(
         criteria="any_fail",
     ),
     category="caca",
-    type="conversation",
 )
 
 test_set = probe.get_test_set()
@@ -57,7 +56,6 @@ client.save_evaluation_scenario_run(results)
 loaded_scenario = client.get_evaluation_scenario(scenario.id)
 
 print(scenario.category)
-print(scenario.type)
 
 loaded_scenario_result = client.get_evaluation_scenario_run(scenario.id)
 

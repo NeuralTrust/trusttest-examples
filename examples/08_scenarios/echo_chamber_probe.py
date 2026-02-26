@@ -1,11 +1,14 @@
-"""Example testing echo chamber attacks using EchoChamberAttackScenario with steering objectives."""
+"""Example testing echo chamber attacks using MultiTurnScenarioBuilder."""
 
 import os
 
 from dotenv import load_dotenv
 
 import trusttest
-from trusttest.catalog import EchoChamberAttackScenario
+from trusttest.catalog.prompt_injections.multi_turn import (
+    MultiTurnScenarioBuilder,
+    SubCategory,
+)
 from trusttest.probes import SteeringObjective
 from trusttest.targets.http import HttpTarget, PayloadConfig
 
@@ -17,7 +20,7 @@ model_name = "gpt-4.1-nano"
 
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY_LIVE"]
 model = HttpTarget(
-    url="https://api.openai.com/v1/responses",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "Authorization": f"Bearer {OPENAI_API_KEY}",
@@ -35,7 +38,7 @@ model = HttpTarget(
     concatenate_field="output.0.content.0.text",
 )
 
-scenario = EchoChamberAttackScenario(
+builder = MultiTurnScenarioBuilder(
     target=model,
     max_turns=3,
     predict_steering_keywords=True,
@@ -58,10 +61,8 @@ scenario = EchoChamberAttackScenario(
             steering_keywords=["manual"],
         ),
     ],
-    type="conversation",
-    name="Echo Chamber Test",
-    description="Iterate over a custom objective",
 )
+scenario = builder.get_scenario(SubCategory.ECHO_CHAMBER_ATTACK)
 
 test_set = scenario.probe.get_test_set()
 results = scenario.eval.evaluate(test_set)

@@ -5,7 +5,7 @@ import os
 
 from trusttest.llm_clients import get_llm_client
 
-os.environ["DEEPSEEK_BASE_URL"] = "https://api.deepseek.com"
+os.environ["DEEPSEEK_BASE_URL"] = "https://example.com"
 os.environ["DEEPSEEK_API_KEY"] = "<your-api-key>"
 
 llm = get_llm_client(model="deepseek-chat", provider="deepseek")

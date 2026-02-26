@@ -11,10 +11,15 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "mypy>=1.18.2",
     "pre-commit>=4.4.0",
     "ruff>=0.14.6",
+    "ty>=0.0.18",
 ]
+pdf-to-chunks = [
+    "pymupdf4llm>=0.3.4",
+    "langchain-text-splitters>=1.1.1",
+]
+
 azure-kb = [
     "trusttest[rag-azure]>=2.0.1",
 ]
@@ -32,7 +37,5 @@ postgres-kb = [
 name = "internal"
 url = "https://oauth2accesstoken@europe-west1-python.pkg.dev/neuraltrust-app-prod/nt-python/simple"
 
-[tool.mypy]
-[[tool.mypy.overrides]]
-module = "trusttest.*"
-ignore_missing_imports = true
+[tool.ty.environment]
+python = ".venv"
