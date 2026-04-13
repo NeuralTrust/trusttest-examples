@@ -15,7 +15,7 @@ from trusttest.llm_clients import get_llm_client
 from trusttest.probes import DatasetProbe
 from trusttest.targets import Target
 
-os.environ["OLLAMA_HOST"] = "http://localhost:11434"
+os.environ["OLLAMA_HOST"] = "https://example.com"
 
 
 class LocalLLMTarget(Target):

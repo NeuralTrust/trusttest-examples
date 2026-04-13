@@ -5,12 +5,12 @@ import os
 
 from dotenv import load_dotenv
 
-from trusttest.llm_clients import HTTPClient, RetryConfig
+from trusttest.llm_clients.http import HTTPClient, RetryConfig
 
 load_dotenv()
 
 http_client = HTTPClient(
-    url="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "X-goog-api-key": os.getenv("GOOGLE_API_KEY") or "",

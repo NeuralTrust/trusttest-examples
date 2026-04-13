@@ -1,30 +1,20 @@
-import json
 import os
 from typing import List
 
 from dotenv import load_dotenv
 
 import trusttest
-from trusttest.evaluation_scenarios import EvaluationScenario
-from trusttest.evaluator_suite import EvaluatorSuite
-from trusttest.evaluators import TrueFalseEvaluator
-from trusttest.language_detection.types import LanguageType
-from trusttest.probes.system_prompt_disclosure import (
-    ConfusionAndClarificationDatasetProbe,
-    DirectRequestDatasetProbe,
-    ExplanationModeDatasetProbe,
-    MetaLevelInstructionInquiryDatasetProbe,
-    ObliqueReferenceDatasetProbe,
-    RequestForAPortionDatasetProbe,
-    RequestForPhraseConclusionDatasetProbe,
+from trusttest.catalog.system_prompt_disclosure import (
+    SystemPromptDisclosureScenarioBuilder,
 )
+from trusttest.language_detection.types import LanguageType
 from trusttest.targets.http import HttpTarget, PayloadConfig
 
 load_dotenv(override=True)
 
 
 target = HttpTarget(
-    url="https://api.example.com/chat/banking",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
     },
@@ -41,46 +31,21 @@ target = HttpTarget(
 client = trusttest.client(type="neuraltrust", token=os.getenv("CLIENT_TOKEN"))
 
 languages: List[LanguageType] = ["English"]
+sub_categories = SystemPromptDisclosureScenarioBuilder.sub_categories
 
-probes = [
-    (ConfusionAndClarificationDatasetProbe, "Confusion And Clarification"),
-    (DirectRequestDatasetProbe, "Direct Request"),
-    (ExplanationModeDatasetProbe, "Explanation Mode"),
-    (MetaLevelInstructionInquiryDatasetProbe, "Meta Level Instruction Inquiry"),
-    (ObliqueReferenceDatasetProbe, "Oblique Reference"),
-    (RequestForAPortionDatasetProbe, "Request For A Portion"),
-    (RequestForPhraseConclusionDatasetProbe, "Request For Phrase Conclusion"),
-]
-for ProbeClass, category_name in probes:
-    for language in languages:
-        probe = ProbeClass(
-            target=target,
-            translate_into_language=language,
-            max_objectives_per_category=50,
-        )
-        test_set = probe.get_test_set()
-        os.makedirs(
-            f"datasets/{language}/system_prompt_disclosure/{category_name}",
-            exist_ok=True,
-        )
-        with open(
-            f"datasets/{language}/system_prompt_disclosure/{category_name}/test_set.json",
-            "w",
-        ) as f:
-            json.dump(test_set.to_dict(), f, indent=2)
+for language in languages:
+    builder = SystemPromptDisclosureScenarioBuilder(
+        target=target,
+        language=language,
+        num_test_cases=1,
+    )
+    for sub_category in sub_categories:
+        scenario = builder.get_scenario(sub_category)
+        test_set = scenario.probe.get_test_set()
 
-        scenario = EvaluationScenario(
-            name=f"{category_name}",
-            description=f"Test scenario for {category_name}",
-            evaluator_suite=EvaluatorSuite(
-                evaluators=[TrueFalseEvaluator()],
-                criteria="any_fail",
-            ),
-            category="system-prompt-disclosure",
-        )
-        results = scenario.evaluate(test_set)
+        results = scenario.eval.evaluate(test_set)
         results.display_summary()
 
-        client.save_evaluation_scenario(scenario)
-        client.save_evaluation_scenario_test_set(scenario.id, test_set)
+        client.save_evaluation_scenario(scenario.eval)
+        client.save_evaluation_scenario_test_set(scenario.eval.id, test_set)
         client.save_evaluation_scenario_run(results)

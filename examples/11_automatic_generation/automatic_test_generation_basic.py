@@ -2,11 +2,12 @@
 
 from dotenv import load_dotenv
 
-from trusttest.catalog import RagFunctionalScenario
 from trusttest.evaluation_scenarios.base import ProgressInfo
+from trusttest.evaluation_scenarios import EvaluationScenario
+from trusttest.evaluator_suite import EvaluatorSuite
 from trusttest.evaluators import CorrectnessEvaluator
 from trusttest.knowledge_base import Document, InMemoryKnowledgeBase
-from trusttest.probes.rag import BenignQuestion
+from trusttest.probes.rag import BenignQuestion, RAGProbe
 from trusttest.targets.http import HttpTarget, PayloadConfig
 
 load_dotenv(override=True)
@@ -39,7 +40,7 @@ documents = [
 knowledge_base = InMemoryKnowledgeBase(documents=documents)
 
 target = HttpTarget(
-    url="https://my-llm/chat",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
     },
@@ -54,12 +55,22 @@ target = HttpTarget(
 )
 
 
-rag_test = RagFunctionalScenario(
+probe = RAGProbe(
     target=target,
     knowledge_base=knowledge_base,
     num_questions=1,
     question_types=[BenignQuestion.SIMPLE],
-    evaluators=[CorrectnessEvaluator()],
+    language="French",
+)
+scenario = EvaluationScenario(
+    name="Automatic RAG Test Generation",
+    description="Generate and evaluate RAG questions with progress callbacks.",
+    evaluator_suite=EvaluatorSuite(
+        evaluators=[CorrectnessEvaluator()],
+        criteria="any_fail",
+    ),
+    category="functional",
+    sub_category="question-answer",
     language="French",
 )
 
@@ -72,10 +83,8 @@ def my_progress_callback(progress: ProgressInfo) -> None:
     )
 
 
-test_set = rag_test.probe.get_test_set(
-    show_progress=False, on_progress=my_progress_callback
-)
-results = rag_test.eval.evaluate(
+test_set = probe.get_test_set(show_progress=False, on_progress=my_progress_callback)
+results = scenario.evaluate(
     test_set, show_progress=False, on_progress=my_progress_callback
 )
 

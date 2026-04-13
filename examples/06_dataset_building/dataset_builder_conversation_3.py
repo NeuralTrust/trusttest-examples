@@ -13,7 +13,7 @@ builder = ConversationDatasetBuilder(
     questions about customer support airline.
     """,
     examples=[],
-    language="english",
+    language="English",
     num_items=2,
     max_messages=3,
     context_type=ObjectiveContext,

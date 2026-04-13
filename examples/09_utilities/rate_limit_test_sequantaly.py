@@ -45,7 +45,7 @@ def main() -> None:
     message: str = "Hello, how are you?"
 
     target: HttpTarget = HttpTarget(
-        url="https://my-llm/chat",
+        url="https://example.com/api/chat",
         headers={
             "Content-Type": "application/json",
         },
