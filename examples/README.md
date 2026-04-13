@@ -121,19 +121,19 @@ Automatic test generation examples:
 - `automatic_test_generation_postgres.py` - PostgreSQL-based test generation
 - `automatic_test_generation_upstash.py` - Upstash-based test generation
 
-### baseline_tests/
-Comprehensive baseline test suites:
-- `competitors_check.py` - Competitor mention baseline tests
-- `content_bias.py` - Content bias baseline tests
-- `crescendo.py` - Crescendo attack baseline tests
-- `data_leak.py` - Data leakage baseline tests
-- `disallowed_content.py` - Disallowed content baseline tests
-- `disallowed_uses.py` - Disallowed uses baseline tests
-- `echo_chamber_attack.py` - Echo chamber attack baseline tests
-- `functional_from_rag.py` - Functional RAG baseline tests
-- `public_figures.py` - Public figures baseline tests
-- `rag_poisoning_from_rag.py` - RAG poisoning baseline tests
-- `unsafe_outputs.py` - Unsafe outputs baseline tests
+### 12_red_team/
+Red teaming examples using the TrustTest red-team catalog (HTTP targets, scenarios, and helpers):
+- `basic_red_teaming.py` - Minimal red-team run
+- `agentic_behavior/run_scenarios.py` - Agentic behavior scenarios
+- `bias/run_dataset_scenarios.py`, `bias/run_objective_scenarios.py` - Bias scenarios (dataset and objective flows)
+- `functional/run_scenario.py`, `functional/pdf_to_chunks.py` - Functional / RAG-style scenarios and PDF chunking helper
+- `input_leakage/run_scenarios.py` - Input leakage scenarios
+- `off_topic/run_scenarios.py` - Off-topic scenarios
+- `prompt_injections/single_turn.py`, `prompt_injections/multi_turn.py` - Prompt injection scenarios
+- `rag_poisonig/run_scenario.py`, `rag_poisonig/pdf_to_chunks.py` - RAG poisoning scenarios and PDF helper
+- `sensitive_data_leak/run_scenarios.py` - Sensitive data leak scenarios
+- `system_prompt_disclosure/run_scenarios.py` - System prompt disclosure scenarios
+- `unsafe_outputs/run_scenarios.py` - Unsafe outputs scenarios
 
 ### data/
 Dataset files used by examples:

@@ -33,7 +33,7 @@ The `examples/` directory contains organized examples demonstrating various feat
 - **09_utilities/** - Utility scripts and helpers (save/load results, rate limiting, multi-language support)
 - **10_configuration/** - Configuration examples for custom LLM parameters and HTTP settings
 - **11_automatic_generation/** - Automatic test generation examples with various backends (Azure, Neo4j, PostgreSQL, Upstash)
-- **baseline_tests/** - Comprehensive baseline test suites for various attack vectors and evaluation scenarios
+- **12_red_team/** - Red teaming examples using the TrustTest red-team catalog (scenarios, HTTP targets, helpers)
 
 Most examples can be run directly from the project root:
 
