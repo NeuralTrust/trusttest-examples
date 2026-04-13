@@ -17,7 +17,7 @@ from trusttest.targets.http import HttpTarget, PayloadConfig
 load_dotenv(override=True)
 
 target = HttpTarget(
-    url="https://example.com/api/chat",
+    url="https://example.com/chat",
     headers={
         "Content-Type": "application/json",
     },

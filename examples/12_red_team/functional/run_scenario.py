@@ -15,7 +15,7 @@ from trusttest.targets.http import HttpTarget, PayloadConfig
 load_dotenv(override=True)
 
 target = HttpTarget(
-    url="https://example.com/api/chat",
+    url="https://example.com/chat",
     headers={
         "Content-Type": "application/json",
     },
@@ -66,7 +66,7 @@ scenario = EvaluationScenario(
 )
 
 test_set = rag_probe.get_test_set()
-results = scenario.evaluate(test_set)
+results = scenario.evaluate(test_set)  # type: ignore
 results.display_summary()
 
 client.save_evaluation_scenario(scenario)
