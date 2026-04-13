@@ -4,8 +4,11 @@ import os
 
 from dotenv import load_dotenv
 
-from trusttest.catalog import RagFunctionalScenario
+from trusttest.evaluation_scenarios import EvaluationScenario
+from trusttest.evaluator_suite import EvaluatorSuite
+from trusttest.evaluators import CorrectnessEvaluator
 from trusttest.knowledge_base.neo4j import Neo4jKnowledgeBase
+from trusttest.probes.rag import RAGProbe
 from trusttest.targets.testing import DummyTarget
 
 load_dotenv(override=True)
@@ -19,10 +22,23 @@ knowledge_base = Neo4jKnowledgeBase(
     uri=url, username=username, password=password, language="English"
 )
 
-rag_test = RagFunctionalScenario(
-    target=DummyTarget(), knowledge_base=knowledge_base, num_questions=2
+probe = RAGProbe(
+    target=DummyTarget(),
+    knowledge_base=knowledge_base,
+    num_questions=2,
+    language="English",
+)
+scenario = EvaluationScenario(
+    name="Automatic RAG Test Generation (Neo4j)",
+    description="Generate and evaluate RAG questions using Neo4j knowledge base.",
+    evaluator_suite=EvaluatorSuite(
+        evaluators=[CorrectnessEvaluator()],
+        criteria="any_fail",
+    ),
+    category="functional",
+    sub_category="question-answer",
 )
 
-test_set = rag_test.probe.get_test_set()
-results = rag_test.eval.evaluate(test_set)
+test_set = probe.get_test_set()
+results = scenario.evaluate(test_set)
 results.display_summary()

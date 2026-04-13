@@ -39,7 +39,7 @@ from trusttest.targets.http import HttpTarget, PayloadConfig
 
 load_dotenv(override=True)
 
-os.environ["NEURALTRUST_BASE_URL"] = "https://control-dev.neuraltrust.ai/v1/evaluation"
+os.environ["NEURALTRUST_BASE_URL"] = "https://example.com/v1/evaluation"
 
 client = trusttest.client(
     type="neuraltrust",
@@ -48,7 +48,7 @@ client = trusttest.client(
 )
 
 model = HttpTarget(
-    url="https://api.openai.com/v1/chat/completions",
+    url="https://example.com/api/chat",
     headers={
         "Content-Type": "application/json",
         "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",
