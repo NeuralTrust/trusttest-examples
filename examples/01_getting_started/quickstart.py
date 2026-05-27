@@ -68,7 +68,11 @@ results.display()
 results.display_summary()
 
 
-client = trusttest.client(type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 client.save_evaluation_scenario(scenario)
 client.save_evaluation_scenario_test_set(scenario.id, test_set)

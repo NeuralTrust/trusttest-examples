@@ -27,7 +27,11 @@ target = HttpTarget(
     concatenate_field="response",
 )
 
-client = trusttest.client(type="neuraltrust", token=os.getenv("CLIENT_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("CLIENT_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 with open("document_chunks.yaml", "r") as f:
     document_chunks = yaml.safe_load(f)
