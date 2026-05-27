@@ -50,6 +50,7 @@ results.display_summary()
 client = trusttest.client(
     type="neuraltrust",
     token=os.getenv("MY_NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
     verify=False,
 )
 

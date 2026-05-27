@@ -19,7 +19,11 @@ from trusttest.targets.http import HttpTarget, PayloadConfig
 
 load_dotenv(override=True)
 
-client = trusttest.client(type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 
 model = HttpTarget(
