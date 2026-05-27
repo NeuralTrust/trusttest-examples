@@ -15,7 +15,11 @@ from trusttest.targets.testing import DummyTarget
 
 load_dotenv()
 
-client = trusttest.client(type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 dataset_path = "examples/data/qa_dataset.json"
 dataset: Dataset[ExpectedResponseContext] = Dataset.from_json(path=dataset_path)

@@ -11,7 +11,9 @@ import trusttest
 load_dotenv(override=True)
 
 app_pre_client = trusttest.client(
-    type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN")
+    type="neuraltrust",
+    token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
 )
 
 scenario = app_pre_client.get_evaluation_scenario(
@@ -36,7 +38,9 @@ for test_case in new_test_set.test_cases:
 
 
 app_stg_client = trusttest.client(
-    type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN")
+    type="neuraltrust",
+    token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
 )
 
 app_stg_client.save_evaluation_scenario(new_scenario)

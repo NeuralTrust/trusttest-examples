@@ -14,7 +14,9 @@ from trusttest.targets.http import HttpTarget, PayloadConfig
 
 load_dotenv()
 APP_TOKEN = os.environ["ECHO_CHAMBER_APP_TOKEN"]
-client = trusttest.client(type="neuraltrust", token=APP_TOKEN)
+client = trusttest.client(
+    type="neuraltrust", token=APP_TOKEN, target_id=os.getenv("NEURALTRUST_TARGET_ID")
+)
 
 model_name = "gpt-4.1-nano"
 

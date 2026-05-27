@@ -44,6 +44,7 @@ os.environ["NEURALTRUST_BASE_URL"] = "https://example.com/v1/evaluation"
 client = trusttest.client(
     type="neuraltrust",
     token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
     verify=False,
 )
 

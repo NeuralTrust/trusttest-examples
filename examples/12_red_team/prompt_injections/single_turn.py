@@ -24,7 +24,11 @@ target = HttpTarget(
     concatenate_field="response",
 )
 
-client = trusttest.client(type="neuraltrust", token=os.getenv("CLIENT_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("CLIENT_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 run_scenarios(
     target=target,

@@ -4,12 +4,13 @@ import asyncio
 import time
 from typing import List, Tuple
 
+from trusttest.targets import Response
 from trusttest.targets.http import HttpTarget, PayloadConfig
 
 
 async def _shoot_requests(
     target: HttpTarget, message: str, num_requests: int
-) -> Tuple[float, List[str]]:
+) -> Tuple[float, List[Response]]:
     """Fire multiple concurrent requests and measure elapsed time.
 
     Args:
@@ -21,10 +22,10 @@ async def _shoot_requests(
         A tuple of (elapsed_seconds, responses_list).
     """
     start: float = time.perf_counter()
-    tasks: List[asyncio.Task[str]] = [
+    tasks: List[asyncio.Task[Response]] = [
         asyncio.create_task(target.async_respond(message)) for _ in range(num_requests)
     ]
-    responses: List[str] = await asyncio.gather(*tasks)
+    responses: List[Response] = await asyncio.gather(*tasks)
     end: float = time.perf_counter()
     return end - start, responses
 
@@ -57,7 +58,7 @@ def main() -> None:
     )
 
     elapsed: float
-    responses: List[str]
+    responses: List[Response]
     elapsed, responses = asyncio.run(_shoot_requests(target, message, num_requests))
 
     expected_min: float = _expected_min_elapsed(num_requests, rate_limit)
@@ -72,7 +73,7 @@ def main() -> None:
 
     # Optionally display truncated responses for sanity
     for i, r in enumerate(responses, 1):
-        snippet: str = (r or "").replace("\n", " ")[:80]
+        snippet: str = (r.response or "").replace("\n", " ")[:80]
         print(f"  [{i}] {snippet}")
 
 

@@ -12,7 +12,11 @@ load_dotenv(override=True)
 
 
 target = IcantAssistTarget()
-client = trusttest.client(type="neuraltrust", token=os.getenv("TARGET_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("TARGET_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 
 languages: List[LanguageType] = ["English"]

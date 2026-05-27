@@ -148,4 +148,4 @@ Most examples can be run directly from the project root:
 python examples/01_getting_started/quickstart.py
 ```
 
-Note: Some examples require environment variables to be set (API keys, etc.). Check individual files for specific requirements.
+Note: Some examples require environment variables to be set (API keys, `NEURALTRUST_TOKEN`, `NEURALTRUST_TARGET_ID`, etc.). Check individual files for specific requirements.
