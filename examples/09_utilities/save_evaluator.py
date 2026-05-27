@@ -12,7 +12,11 @@ from trusttest.evaluators import (
 load_dotenv()
 
 
-client = trusttest.client(type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 evaluator = RegexEvaluator(pattern=r".*drugs.*")
 name = "drugs 135"

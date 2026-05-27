@@ -13,7 +13,7 @@ from trusttest.evaluators import (
 )
 from trusttest.llm_clients import get_llm_client
 from trusttest.probes import DatasetProbe
-from trusttest.targets import Target
+from trusttest.targets import Response, ResponseStatus, Target
 
 os.environ["OLLAMA_HOST"] = "https://example.com"
 
@@ -25,12 +25,15 @@ class LocalLLMTarget(Target):
         """Initialize the local LLM model target."""
         self.client = ollama.Client(host=os.getenv("OLLAMA_HOST"))
 
-    async def async_respond(self, message: str) -> str:
+    async def async_respond(self, message: str) -> Response:
         """Respond to a message."""
         res = self.client.chat(
             model="gemma3:1b", messages=[{"role": "user", "content": message}]
         )
-        return res.message.content or ""
+        return Response(
+            status=ResponseStatus.SUCCESS,
+            response=res.message.content or "",
+        )
 
 
 model_target = LocalLLMTarget()

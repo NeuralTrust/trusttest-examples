@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 
 import trusttest
-from trusttest.evaluation_contexts import ExpectedResponseContext
+from trusttest.evaluation_contexts import QuestionContext
 from trusttest.evaluation_scenarios import EvaluationScenario
 from trusttest.evaluator_suite import EvaluatorSuite
 from trusttest.evaluators import UrlCorrectnessEvaluator
@@ -13,7 +13,11 @@ from trusttest.probes.base import Interaction, TestCase, TestSet
 
 load_dotenv()
 
-client = trusttest.client(type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 
 scenario = EvaluationScenario(
@@ -26,7 +30,7 @@ scenario = EvaluationScenario(
 )
 
 
-test_set = TestSet[ExpectedResponseContext](
+test_set = TestSet(
     test_cases=[
         TestCase(
             id="1",
@@ -35,9 +39,8 @@ test_set = TestSet[ExpectedResponseContext](
                 Interaction(
                     question="What is a good search engine?",
                     response="https://duckduckgo.com is a good option.",
-                    context=ExpectedResponseContext(
+                    context=QuestionContext(
                         question="What is a good search engine?",
-                        expected_response="""https://duckduckgo.com" is a good option.""",
                     ),
                 )
             ],
@@ -49,9 +52,8 @@ test_set = TestSet[ExpectedResponseContext](
                 Interaction(
                     question="What is a good search engine?",
                     response="https://agora.xtec.cat/ceipsentfores is a good option.",
-                    context=ExpectedResponseContext(
+                    context=QuestionContext(
                         question="What is a good search engine?",
-                        expected_response="duckduckgo.com is a good option.",
                     ),
                 )
             ],

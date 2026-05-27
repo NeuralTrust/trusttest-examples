@@ -1,22 +1,95 @@
 # TrustTest Examples
 
-This repository contains example code and tutorials demonstrating how to use TrustTest for LLM functional evaluation and red teaming.
+Build confidence in your LLM applications with hands-on TrustTest examples for functional evaluation, red teaming, and safer releases.
 
-For more information about TrustTest, please visit the [TrustTest documentation](https://docs.neuraltrust.ai/trusttest/getting-started/overview).
+Explore ready-to-run workflows, adapt them to your own targets, and learn more in the [TrustTest documentation](https://docs.neuraltrust.ai/trusttest/getting-started/overview).
+
+## Usage
+
+To run a base Red Teaming scenario, you can use the following code:
+
+```python
+import os
+from typing import List
+
+from dotenv import load_dotenv
+
+import trusttest
+from trusttest.catalog.red_team import run_red_teaming
+from trusttest.language_detection.types import LanguageType
+from trusttest.targets.http import HttpTarget, PayloadConfig
+
+load_dotenv(override=True)
+
+
+target = HttpTarget(
+    url="https://your-api.com/chat",
+    headers={"Content-Type": "application/json"},
+    payload_config=PayloadConfig(format={"message": "{{ test }}"}),
+    concatenate_field="response",
+)
+
+client = trusttest.client(type="neuraltrust", token=os.getenv("TARGET_TOKEN"), target_id=os.getenv("NEURALTRUST_TARGET_ID"))
+
+languages: List[LanguageType] = ["English"]
+for language in languages:
+    run_red_teaming(
+        target, language=language, client=client, num_test_cases=50, evaluate=False
+    )
+```
+
+Or go much deeper and create your own custom scenario:
+
+```python
+from trusttest.dataset_builder import Dataset
+from trusttest.evaluation_contexts import ExpectedResponseContext
+from trusttest.evaluation_scenarios import EvaluationScenario
+from trusttest.evaluator_suite import EvaluatorSuite
+from trusttest.evaluators import CompletenessEvaluator, CorrectnessEvaluator
+from trusttest.probes import DatasetProbe
+from trusttest.targets.http import HttpTarget, PayloadConfig
+
+target = HttpTarget(
+    url="https://your-api.com/chat",
+    headers={"Content-Type": "application/json"},
+    payload_config=PayloadConfig(format={"message": "{{ test }}"}),
+    concatenate_field="response",
+)
+
+dataset: Dataset[ExpectedResponseContext] = Dataset.from_json(path="data/qa_dataset.json")
+probe = DatasetProbe(target=target, dataset=dataset)
+
+scenario = EvaluationScenario(
+    description="Evaluate model responses",
+    name="QA Evaluation",
+    evaluator_suite=EvaluatorSuite(
+        evaluators=[
+            CorrectnessEvaluator(threshold=4),
+            CompletenessEvaluator(threshold=4),
+        ],
+        criteria="any_fail",
+    ),
+)
+
+test_set = probe.get_test_set()
+results = scenario.evaluate(test_set)
+results.display_summary()
+```
 
 ## Installation
 
-To install TrustTest python package you will need the credentials to access our private Python package repository. **Please contact us to get the credentials.**
+To install TrustTest you need credentials for our private Python package repository. **Please contact us to get access.**
+
+For full instructions, see the [How to Install TrustTest](https://docs.neuraltrust.ai/trusttest/getting-started/installation).
+
+Authenticate with GCP, then run:
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS=pypi_private.json
-export UV_KEYRING_PROVIDER=subprocess
-uv tool install keyring --with keyrings.google-artifactregistry-auth
-
-uv sync
-# install all optional dependencies
-uv sync --all-extras
+gcloud auth login
+make install
 ```
+
+`make install` configures Artifact Registry auth (keyring), creates the virtual environment (`uv sync --all-extras`), and installs pre-commit hooks.
 
 ## Examples Directory Structure
 
@@ -45,15 +118,16 @@ For detailed information about each folder and its contents, see [examples/READM
 
 ## Development
 
-We use [pre-commit](https://pre-commit.com/) to run linting and formatting checks. You can get it by using ``brew install pre-commit``. You can then install it in the project with the following command:
+Install the virtual environment and pre-commit hooks:
 
 ```bash
-pre-commit install
+make install
 ```
 
-When you make changes to the code, you can run the following command to run the linting and formatting checks:
+Run linting, formatting, and type checks:
 
 ```bash
-ruff check . --fix && ruff format .
-mypy .
+make lint
 ```
+
+This runs [Ruff](https://docs.astral.sh/ruff/) (lint + format) and [ty](https://docs.astral.sh/ty/) type checking. [pre-commit](https://pre-commit.com/) hooks are installed by `make install` and run the same checks on commit.

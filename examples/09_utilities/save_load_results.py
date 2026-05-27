@@ -24,7 +24,11 @@ load_dotenv(override=True)
 os.environ["NEURALTRUST_BASE_URL"] = "https://example.com/v1/evaluation"
 
 
-client = trusttest.client(type="neuraltrust", token=os.getenv("NEURALTRUST_TOKEN"))
+client = trusttest.client(
+    type="neuraltrust",
+    token=os.getenv("NEURALTRUST_TOKEN"),
+    target_id=os.getenv("NEURALTRUST_TARGET_ID"),
+)
 
 dataset_path = "examples/data/qa_dataset.json"
 dataset: Dataset[ExpectedResponseContext] = Dataset.from_json(path=dataset_path)
