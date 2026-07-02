@@ -82,7 +82,7 @@ To install TrustTest you need credentials for our private Python package reposit
 
 For full instructions, see the [How to Install TrustTest](https://docs.neuraltrust.ai/trusttest/getting-started/installation).
 
-Authenticate with GCP, then run:
+If your GCP account have direct access to Neuraltrust Artifact Registry:
 
 ```bash
 gcloud auth login
