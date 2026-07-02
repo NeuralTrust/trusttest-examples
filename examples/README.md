@@ -22,8 +22,15 @@ Examples demonstrating different target/client configurations:
 - `deepseek.py` - DeepSeek API integration
 - `default_client.py` - Default client configuration
 
-### 03_security_attacks/
-Security attack vector examples and probes:
+### 03_evaluators/
+Custom evaluator examples:
+- `custom_evaluator_expected_response.py` - Custom evaluator with expected responses
+- `llm_as_judge.py` - Using LLM as a judge/evaluator
+
+### 04_probes/
+Probe examples for security testing, bias detection, and evaluation scenarios:
+
+**Security attack probes:**
 - `xss_attack_vector.py` - XSS attack detection
 - `json_injection.py` - JSON injection attacks
 - `context_hijacking.py` - Context hijacking attacks
@@ -45,9 +52,9 @@ Security attack vector examples and probes:
 - `virus_output.py` - Virus/malware output detection
 - `multi_turn_manipulation.py` - Multi-turn conversation manipulation
 - `typo_tricks.py` - Typo-based attack techniques
+- `crescendomation.py` - Crescendo attack scenario
 
-### 04_bias/
-Bias testing examples:
+**Bias probes:**
 - `framing_bias.py` - Framing bias detection
 - `positional_bias.py` - Positional bias testing
 - `anchoring_bias.py` - Anchoring bias examples
@@ -56,32 +63,10 @@ Bias testing examples:
 - `stereotypical_bias.py` - Stereotypical bias detection
 - `bias_prompt.py` - Prompt-based bias testing
 
-### 05_rag_poisoning/
-RAG (Retrieval-Augmented Generation) related examples:
-- `rag_poisoning.py` - RAG poisoning attack examples
-- `test_rag_poisoning.py` - RAG poisoning test suite
-
-### 06_dataset_building/
-Dataset building and construction examples:
-- `dataset_builder_conversation.py` - Conversation dataset builder
-- `dataset_builder_conversation_2.py` - Alternative conversation builder
-- `dataset_builder_conversation_3.py` - Another conversation builder variant
-- `dataset_builder_expected_response.py` - Expected response dataset builder
-- `dataset_builder_objective.py` - Objective-based dataset builder
-- `dataset_builder_objective_2.py` - Alternative objective builder
-- `static_dataset.py` - Static dataset examples
-
-### 07_evaluators/
-Custom evaluator examples:
-- `custom_evaluator_expected_response.py` - Custom evaluator with expected responses
-- `llm_as_judge.py` - Using LLM as a judge/evaluator
-
-### 08_scenarios/
-Evaluation scenario examples:
+**Evaluation scenario probes:**
 - `qa_scenario.py` - Q&A scenario example
 - `competitor_check.py` - Competitor mention detection scenario
 - `competitor_check_prompt.py` - Prompt-based competitor check
-- `crescendomation.py` - Crescendo attack scenario
 - `correct_url.py` - URL correctness evaluation
 - `test_url_correct.py` - URL correctness test suite
 - `echo_chamber_probe.py` - Echo chamber attack probe
@@ -96,32 +81,31 @@ Evaluation scenario examples:
 - `agentic_behavior_limits.py` - Agentic behavior limit testing
 - `synonyms.py` - Synonym-based testing
 
-### 09_utilities/
-Utility scripts and helper examples:
-- `save_load_results.py` - Save and load evaluation results
-- `save_evaluator.py` - Save evaluator configurations
-- `union_testsets.py` - Combine multiple test sets
-- `clone_scenarios.py` - Clone evaluation scenarios
-- `update_testset_respones.py` - Update test set responses
-- `evaluation_runs_and_metrics.py` - Evaluation runs and metrics management
-- `rate_limit_test.py` - Rate limiting tests
-- `rate_limit_test_sequantaly.py` - Sequential rate limit tests
-- `multi_language.py` - Multi-language support examples
+### 05_rag_poisoning/
+RAG (Retrieval-Augmented Generation) poisoning examples:
+- `rag_poisoning.py` - RAG poisoning attack examples
+- `test_rag_poisoning.py` - RAG poisoning test suite
+- `automatic_test_generation_basic.py` - Automatic RAG test generation with in-memory knowledge base
 
-### 10_configuration/
-Configuration examples:
-- `custom_llm_parameters.py` - Custom LLM parameter configuration
-- `custom_http_trusttest_config.json` - Custom HTTP TrustTest configuration
-
-### 11_automatic_generation/
-Automatic test generation examples:
+### 06_functional_tests/
+Automatic functional test generation examples with various backends:
 - `automatic_test_generation_basic.py` - Basic automatic test generation
 - `automatic_test_generation_azure.py` - Azure-based test generation
 - `automatic_test_generation_neo4j.py` - Neo4j-based test generation
 - `automatic_test_generation_postgres.py` - PostgreSQL-based test generation
 - `automatic_test_generation_upstash.py` - Upstash-based test generation
 
-### 12_red_team/
+### 07_dataset_building/
+Dataset building and construction examples:
+- `dataset_builder_conversation.py` - Conversation dataset builder
+- `dataset_builder_conversation_2.py` - Alternative conversation builder
+- `dataset_builder_conversation_3.py` - Another conversation builder variant
+- `dataset_builder_expected_response.py` - Expected response dataset builder
+- `dataset_builder_objective.py` - Objective-based dataset builder
+- `dataset_builder_objective_2.py` - Alternative objective builder
+- `static_dataset.py` - Static dataset examples
+
+### 09_red_team/
 Red teaming examples using the TrustTest red-team catalog (HTTP targets, scenarios, and helpers):
 - `basic_red_teaming.py` - Minimal red-team run
 - `agentic_behavior/run_scenarios.py` - Agentic behavior scenarios
@@ -134,6 +118,14 @@ Red teaming examples using the TrustTest red-team catalog (HTTP targets, scenari
 - `sensitive_data_leak/run_scenarios.py` - Sensitive data leak scenarios
 - `system_prompt_disclosure/run_scenarios.py` - System prompt disclosure scenarios
 - `unsafe_outputs/run_scenarios.py` - Unsafe outputs scenarios
+
+### 10_platform_api/
+Platform API utilities for syncing and running tests with the NeuralTrust control plane:
+- `clone_team.py` - Clone evaluation scenarios and related data between targets
+- `download_tests.py` - Download test cases and evaluation results from the platform
+- `upload_tests.py` - Upload test cases and scenarios to the platform
+- `evaluate_local.py` - Run evaluations locally against downloaded scenario/test-set files
+- `run_all_scenarios.py` - Execute all scenarios for a target via the platform API
 
 ### data/
 Dataset files used by examples:
