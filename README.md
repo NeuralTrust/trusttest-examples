@@ -97,16 +97,13 @@ The `examples/` directory contains organized examples demonstrating various feat
 
 - **01_getting_started/** - Basic examples for getting started with TrustTest (quickstart, basic runs, scenarios)
 - **02_targets/** - Examples demonstrating different target/client configurations (HTTP, local LLM, Ollama, Groq, DeepSeek, etc.)
-- **03_security_attacks/** - Security attack vector examples and probes (XSS, injection attacks, jailbreaks, data leaks, etc.)
-- **04_bias/** - Bias testing examples (framing, positional, anchoring, temporal, stereotypical bias)
-- **05_rag/** - RAG (Retrieval-Augmented Generation) related examples and poisoning attacks
-- **06_dataset_building/** - Dataset building and construction examples
-- **07_evaluators/** - Custom evaluator examples and LLM-as-judge patterns
-- **08_scenarios/** - Evaluation scenario examples (competitor checks, URL correctness, probes, etc.)
-- **09_utilities/** - Utility scripts and helpers (save/load results, rate limiting, multi-language support)
-- **10_configuration/** - Configuration examples for custom LLM parameters and HTTP settings
-- **11_automatic_generation/** - Automatic test generation examples with various backends (Azure, Neo4j, PostgreSQL, Upstash)
-- **12_red_team/** - Red teaming examples using the TrustTest red-team catalog (scenarios, HTTP targets, helpers)
+- **03_evaluators/** - Custom evaluator examples and LLM-as-judge patterns
+- **04_probes/** - Probe examples for security testing, bias detection, and evaluation scenarios (XSS, injection attacks, jailbreaks, competitor checks, URL correctness, etc.)
+- **05_rag_poisoning/** - RAG poisoning attack examples and automatic RAG test generation
+- **06_functional_tests/** - Automatic functional test generation with various backends (Azure, Neo4j, PostgreSQL, Upstash)
+- **07_dataset_building/** - Dataset building and construction examples
+- **09_red_team/** - Red teaming examples using the TrustTest red-team catalog (scenarios, HTTP targets, helpers)
+- **10_platform_api/** - Platform API utilities for syncing and running tests with the NeuralTrust control plane (clone, upload, download, local evaluation)
 
 Most examples can be run directly from the project root:
 
