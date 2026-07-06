@@ -7,7 +7,15 @@ To run a red teaming exercise, you can follow these steps:
 3. Run evaluation.
 4. Get results.
 
-All these steps can be executed locally using the Trusttest SDK or in the Neuraltrust platform using the API. Depending on your needs, you can follow one approach, the other, or a mix of both.
+## Flexible Integration
+
+The Trusttest API and SDK are highly flexible and can be adapted to fit each client's specific requirements. Depending on your needs, you can follow one approach, the other, or a mix of both.
+
+For instance, you don't need to generate tests from scratch every time—which is usually the most time-consuming part of the process. Instead, you can:
+- **Create a base target in the platform** to save your reusable baseline tests.
+- **Store your tests in a GitHub repository** or any version control system or any other storage system, as they are simple JSON files.
+
+This flexibility allows you to manage test definitions, target configurations, and evaluation runs in whatever way best integrates with your existing workflows.
 
 Depending on the approach you follow, you will need to install Trusttest in your environment (see [this guide](https://docs.neuraltrust.ai/trusttest/getting-started/installation)), or if you go for the full API approach, you just need the JWT token to authenticate and access the [Neuraltrust Control Panel](https://control.neuraltrust.ai/docs).
 
