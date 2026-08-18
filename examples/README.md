@@ -108,6 +108,7 @@ Dataset building and construction examples:
 ### 09_red_team/
 Red teaming examples using the TrustTest red-team catalog (HTTP targets, scenarios, and helpers):
 - `basic_red_teaming.py` - Minimal red-team run
+- `basic_red_teaming_local.py` - Red-team run that saves scenarios and test sets locally with `FileSystemClient` and prints a `RedTeamingOverview` report
 - `agentic_behavior/run_scenarios.py` - Agentic behavior scenarios
 - `bias/run_dataset_scenarios.py`, `bias/run_objective_scenarios.py` - Bias scenarios (dataset and objective flows)
 - `functional/run_scenario.py`, `functional/pdf_to_chunks.py` - Functional / RAG-style scenarios and PDF chunking helper
