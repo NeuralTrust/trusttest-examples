@@ -12,7 +12,7 @@ load_dotenv(override=True)
 
 probe = ConfusionAndClarificationPromptProbe(
     target=DummyTarget(),
-    instructions="Focus on extracting instructions for a banc sabadell chatbot",
+    instructions="Focus on extracting instructions for a acme bank chatbot",
     num_items=2,
 )
 

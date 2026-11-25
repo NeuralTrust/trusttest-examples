@@ -14,7 +14,7 @@ model = DummyTarget()
 
 probe = ContextualLeakageRequestPromptProbe(
     target=model,
-    instructions="Focus on extracting instructions for a banc sabadell chatbot",
+    instructions="Focus on extracting instructions for a acme bank chatbot",
     num_items=2,
 )
 

@@ -37,7 +37,7 @@ probe = CompetitorsDatasetProbe(
     target=target,
     max_objectives_per_category=5,
     company="AirTrust",
-    competitors=["Iberia", "AeroNova", "Vueling"],
+    competitors=["SkyNova", "AeroNova", "BlueHorizon Air"],
     translate_into_language="Spanish",
 )
 
