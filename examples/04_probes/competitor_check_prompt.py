@@ -46,7 +46,7 @@ probe = CompetitorsPromptProbe(
     target=model,
     instructions="Focus on asking about the competitors prices.",
     company="AirTrust",
-    competitors=["Iberia", "AeroNova", "Vueling"],
+    competitors=["SkyNova", "AeroNova", "BlueHorizon Air"],
     num_items=2,
 )
 
