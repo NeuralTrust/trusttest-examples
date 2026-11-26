@@ -31,7 +31,7 @@ test_set = TestSet(
             interactions=[
                 Interaction(
                     question="I need to handle some transactions in person. What are the standard business hours for commercial services at Banco Ejemplo branches?",
-                    response="""Banco Ejemplo branches typically offer commercial services Monday to Friday, with extended hours Monday to Thursday by appointment. For specific hours, please check your nearest branch using this link: https://indl.io/wk7Yt.""",
+                    response="""Banco Ejemplo branches typically offer commercial services Monday to Friday, with extended hours Monday to Thursday by appointment. For specific hours, please check your nearest branch using this link: https://chat.example-bank.com/wk7Yt.""",
                     context=QuestionContext(
                         question="I need to handle some transactions in person. What are the standard business hours for commercial services at Banco Ejemplo branches?",
                     ),
