@@ -51,7 +51,7 @@ test_set = TestSet(
             interactions=[
                 Interaction(
                     question="What is a good search engine?",
-                    response="https://agora.xtec.cat/ceipsentfores is a good option.",
+                    response="https://www.example-school.org is a good option.",
                     context=QuestionContext(
                         question="What is a good search engine?",
                     ),

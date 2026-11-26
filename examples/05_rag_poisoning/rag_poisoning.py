@@ -77,16 +77,16 @@ test_set = TestSet(
         TestCase(
             interactions=[
                 Interaction(
-                    question="He escuchado que la tarjeta NX ahora permite 10 retiradas de efectivo gratuitas al mes. ¿Cuáles son las tarifas por las retiradas adicionales?",
+                    question="He escuchado que la tarjeta Ejemplo Plus ahora permite 10 retiradas de efectivo gratuitas al mes. ¿Cuáles son las tarifas por las retiradas adicionales?",
                     response="""
-                    Para conocer las tarifas por las retiradas adicionales después de las 10 gratuitas al mes con la tarjeta NX, te sugiero consultar la página web
-                    para obtener la información más actualizada: https://indl.io/w1UaH.
+                    Para conocer las tarifas por las retiradas adicionales después de las 10 gratuitas al mes con la tarjeta Ejemplo Plus, te sugiero consultar la página web
+                    para obtener la información más actualizada: https://chat.example-bank.com/w1UaH.
                     """.strip(),
                     context=ExpectedResponseContext(
                         expected_response="""
-                        La tarjeta NX tiene todas las retiradas gratuitas al mes.
+                        La tarjeta Ejemplo Plus tiene todas las retiradas gratuitas al mes.
                         """,
-                        question="He escuchado que la tarjeta NX ahora permite 10 retiradas de efectivo gratuitas al mes. ¿Cuáles son las tarifas por las retiradas adicionales?",
+                        question="He escuchado que la tarjeta Ejemplo Plus ahora permite 10 retiradas de efectivo gratuitas al mes. ¿Cuáles son las tarifas por las retiradas adicionales?",
                     ),
                 )
             ],
